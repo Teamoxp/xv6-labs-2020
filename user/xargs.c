@@ -63,7 +63,6 @@ int main(int argc, char *argv[])
                 memset(buf + occupy, 0, MAX_BUFSIZE - occupy); // 将缓冲区中不需要的部分清零
                 int pid;
                 wait(&pid); // 等待子进程结束
-
                 result = strchr(buf, '\n'); // 继续下一行
             }
         }
