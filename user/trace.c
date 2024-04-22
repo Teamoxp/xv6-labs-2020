@@ -3,6 +3,11 @@
 #include "kernel/stat.h"
 #include "user/user.h"
 
+#include "kernel/spinlock.h"
+#include "kernel/riscv.h"
+#include "kernel/proc.h"
+#include "kernel/syscall.h"
+
 int
 main(int argc, char *argv[])
 {

@@ -259,8 +259,8 @@ int
 fork(void)
 {
   int i, pid;
-  struct proc *np;
-  struct proc *p = myproc();
+  struct proc *np;              // 子进程
+  struct proc *p = myproc();    // 父进程
 
   // Allocate process.
   if((np = allocproc()) == 0){
@@ -290,6 +290,8 @@ fork(void)
   np->cwd = idup(p->cwd);
 
   safestrcpy(np->name, p->name, sizeof(p->name));
+
+  np->trace_mask = p->trace_mask;
 
   pid = np->pid;
 
@@ -488,6 +490,17 @@ scheduler(void)
       asm volatile("wfi");
     }
   }
+}
+
+uint64 procnum(void)
+{
+  uint64 dst = 0;
+  struct proc *p;
+  for(p = proc;p<&proc[NPROC];p++){
+    if(p->state != UNUSED)
+      dst++;
+  }
+  return dst;
 }
 
 // Switch to scheduler.  Must hold only p->lock
